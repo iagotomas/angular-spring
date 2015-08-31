@@ -15,6 +15,11 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.web.client.RestTemplate;
 
+import com.itomas.oauth2.google.security.AuthorityGranter;
+import com.itomas.oauth2.google.security.DefaultUserAuthenticationConverter;
+import com.itomas.oauth2.google.security.GoogleAccessTokenConverter;
+import com.itomas.oauth2.google.security.GoogleTokenServices;
+
 import java.util.HashMap;
 import java.util.Map;
 

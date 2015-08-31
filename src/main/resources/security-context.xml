@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<b:beans xmlns:sec="http://www.springframework.org/schema/security"
-         xmlns:b="http://www.springframework.org/schema/beans"
+<beans xmlns:security="http://www.springframework.org/schema/security"
+         xmlns="http://www.springframework.org/schema/beans"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
-    <sec:http use-expressions="true" entry-point-ref="clientAuthenticationEntryPoint">
-        <sec:http-basic/>
-        <sec:logout/>
-        <sec:anonymous enabled="false"/>
+    <security:http use-expressions="true" entry-point-ref="clientAuthenticationEntryPoint" >
+        <security:http-basic/>
+        <security:logout/>
+        <security:anonymous enabled="false"/>
 
-        <sec:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
-
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
         <!-- This is the crucial part and the wiring is very important -->
         <!-- 
             The order in which these filters execute are very important. oauth2ClientContextFilter must be invoked before 
@@ -19,47 +18,56 @@
             Subsequently the response from Google is handled by the oAuth2AuthenticationProcessingFilter to populate the 
             Authentication object and stored in the SecurityContext
         -->
-        <sec:custom-filter ref="oauth2ClientContextFilter" after="EXCEPTION_TRANSLATION_FILTER"/>
-        <sec:custom-filter ref="oAuth2AuthenticationProcessingFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
-    </sec:http>
+        <security:custom-filter ref="oauth2ClientContextFilter" after="EXCEPTION_TRANSLATION_FILTER"/>
+        <security:custom-filter ref="oAuth2AuthenticationProcessingFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+    </security:http>
 
-    <b:bean id="oAuth2AuthenticationProcessingFilter" class="org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter">
-        <b:constructor-arg name="defaultFilterProcessesUrl" value="/googleLogin"/>
-        <b:property name="restTemplate" ref="googleRestTemplate"/>
-        <b:property name="tokenServices" ref="tokenServices"/>
-    </b:bean>
+	<bean id="oauth2ClientContextFilter" class="org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter">
+	</bean>
+    <bean id="oAuth2AuthenticationProcessingFilter" class="org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter">
+        <constructor-arg name="defaultFilterProcessesUrl" value="${google.preestablished.redirect.url.base}"/>
+        <property name="restTemplate" ref="googleRestTemplate"/>
+        <property name="tokenServices" ref="tokenServices"/>
+    </bean>
 
     <!--
         These token classes are mostly a clone of the Spring classes but have the structure modified so that the response
         from Google can be handled.
     -->
-    <b:bean id="tokenServices" class="com.rst.oauth2.google.security.GoogleTokenServices">
-        <b:property name="checkTokenEndpointUrl" value="https://www.googleapis.com/oauth2/v1/tokeninfo"/>
-        <b:property name="clientId" value="${google.client.id}"/>
-        <b:property name="clientSecret" value="${google.client.secret}"/>
-        <b:property name="accessTokenConverter">
-            <b:bean class="com.rst.oauth2.google.security.GoogleAccessTokenConverter">
-                <b:property name="userTokenConverter">
-                    <b:bean class="com.rst.oauth2.google.security.DefaultUserAuthenticationConverter"/>
-                </b:property>
-            </b:bean>
-        </b:property>
-    </b:bean>
+    <bean id="tokenServices" class="com.itomas.oauth2.google.security.GoogleTokenServices">
+    <!-- 
+        <property name="checkTokenEndpointUrl" value="https://www.googleapis.com/oauth2/v1/tokeninfo"/>
+     -->
+     <property name="tokenStore">
+     	<bean class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore"/>
+     </property>
+     <property name="checkTokenEndpointUrl" value="${google.tokenEndPoint}"/>
+     
+        <property name="clientId" value="${google.client.id}"/>
+        <property name="clientSecret" value="${google.client.secret}"/>
+        <property name="accessTokenConverter">
+            <bean class="com.itomas.oauth2.google.security.GoogleAccessTokenConverter">
+                <property name="userTokenConverter">
+                    <bean class="com.itomas.oauth2.google.security.DefaultUserAuthenticationConverter"/>
+                </property>
+            </bean>
+        </property>
+    </bean>
 
     <!-- 
         This authentication entry point is used for all the unauthenticated or unauthorised sessions to be directed to the 
         /googleLogin URL which is then intercepted by the oAuth2AuthenticationProcessingFilter to trigger authentication from 
         Google.
     -->
-    <b:bean id="clientAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <b:property name="loginFormUrl" value="/googleLogin"/>
-    </b:bean>
+    <bean id="clientAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+	    <constructor-arg name="loginFormUrl" value="${google.preestablished.redirect.url.base}"/>
+    </bean>
 
-    <sec:authentication-manager alias="alternateAuthenticationManager">
-        <sec:authentication-provider>
-            <sec:user-service>
-                <sec:user name="user" password="password" authorities="DOMAIN_USER"/>
-            </sec:user-service>
-        </sec:authentication-provider>
-    </sec:authentication-manager>
-</b:beans>
+    <security:authentication-manager alias="alternateAuthenticationManager">
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="password" authorities="DOMAIN_USER"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

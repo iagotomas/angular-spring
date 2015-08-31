@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 
+import com.itomas.oauth2.google.security.DefaultUserAuthenticationConverter;
+
 import java.util.Map;
 
 public class DefaultUserAuthenticationConverterTest {

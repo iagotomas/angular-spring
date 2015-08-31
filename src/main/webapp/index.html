@@ -1,57 +1,357 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="UTF-8"?>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Basic HTML Page</title>
-    <style>
-        svg {
-            background-color: #f0f0f0;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="libs/bootstrap/dist/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+<link href="libs/angular-bootstrap/ui-bootstrap-csp.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="js/angular/ng-mobile-menu/ng-mobile-menu.min.css" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 
-        #inputparameters {
-            margin: 20px;
-        }
-    </style>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style type="text/css">
+/*
+ * Style tweaks
+ * --------------------------------------------------
+ */
+html, body {
+	overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
 
-    <script src="libs/jquery-2.1.0.min.js"></script>
-    <script>
-        $(function() {
-            function log( message ) {
-                $( "<div>" ).text( message ).prependTo( "#log" );
-                $( "#log" ).scrollTop( 0 );
-            }
+body {
+	padding-top: 70px;
+}
 
-            $( "#username" ).autocomplete({
-                source: "/find",
-                minLength: 3,
-                select: function( event, ui ) {
-                    log( ui.item ?
-                            "Selected: " + ui.item.value + " aka " + ui.item.id :
-                            "Nothing selected, input was " + this.value );
-                }
-            });
-        });
-    </script>
+footer {
+	padding: 30px 0;
+}
+/* Overwrite navbar bg color*/
+.navbar-inverse {
+   background-image: linear-gradient(to bottom, #5FA52D 0px, #205A29 100%);
+ }
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767px) {
+	.row-offcanvas {
+		position: relative;
+		-webkit-transition: all .25s ease-out;
+		-o-transition: all .25s ease-out;
+		transition: all .25s ease-out;
+	}
+	.row-offcanvas-right {
+		right: 0;
+	}
+	.row-offcanvas-left {
+		left: 0;
+	}
+	.row-offcanvas-right
+  .sidebar-offcanvas {
+		right: -50%; /* 6 columns */
+	}
+	.row-offcanvas-left
+  .sidebar-offcanvas {
+		left: -50%; /* 6 columns */
+	}
+	.row-offcanvas-right.active {
+		right: 50%; /* 6 columns */
+	}
+	.row-offcanvas-left.active {
+		left: 50%; /* 6 columns */
+	}
+	.sidebar-offcanvas {
+		position: absolute;
+		top: 0;
+		width: 50%; /* 6 columns */
+	}
+}
+/* Logo animation */
+.logo{
+	font-size:40px;
+	padding:5px;
+}
+.logo>span{
+	color:#7CDB38;
+}
+.logo>span:hover{
+
+    color: #ffffff;
+    -webkit-transition: color 1000ms linear;
+    -moz-transition: color 1000ms linear;
+    -o-transition: color 1000ms linear;
+    -ms-transition: color 1000ms linear;
+    transition: color 1000ms linear;
+    }
+/* End Logo animation */
+/* Truncate an element's content appending ... , width must be set*/
+.truncate {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.card{
+height:260px;
+border: 1px solid rgb(187, 187, 187);
+box-shadow: 1px 1px 5px #333;
+}
+.piles{
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.35), /* The top layer shadow */
+        -1px 5px 0 0px #eee,                    /* The second layer */
+        -1px 4px 1px 0px rgba(0, 0, 0, 0.85),   /* The second layer shadow */
+        -2px 10px 0 0px #eee,                   /* The third layer */
+        -2px 9px 1px 0px rgba(0, 0, 0, 0.85);   /* The third layer shadow */
+}
+.pull-down{
+	position:absolute;
+	bottom:0px;
+}
+.pull-up{
+	position:absolute;
+	top:0px;
+}
+.align-left{
+	left:0px;
+}
+.align-right{
+	right:0px;
+}
+.list-group-header{
+	background-color:#eee;
+}
+.category-btn{
+	margin:5px;
+}
+.breadcrumb{
+background-image: linear-gradient(to bottom, #5FA52D 0px, #205A29 100%);
+}
+.breadcrumb>li.active>span{
+color:#fff;
+}
+.breadcrumb>li>a{
+text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+  color: #9d9d9d;
+}
+.breadcrumb>li>a:hover{
+  color: #fff;
+}
+/* User Profile */
+.user-container {
+height:75px;
+}
+
+.user {
+	float: left;
+}
+
+.user.picture {
+	width: 50px;
+	height: 50px;
+}
+
+.user.profile {
+	margin-left: 5px;
+}
+
+.user.name {    
+	text-shadow: 0px -1px 0px rgba(197, 197, 197, 0.3)
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 24px;
+	color: #5FA52D;
+	clear: right;
+	width: 80%;
+}
+
+.user.email {
+	clear: both;
+	font-size: 12px;
+	color: #335F13;
+}
+/* Editor */
+.editor.control {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.editor.tags.container {
+	width: 95%;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.editor.navbar {
+	bottom: 70px;
+	position: absolute;
+	background-color: #333;
+	width: 100%;
+}
+
+.editor.tags.tag {
+	font-size: 13px;
+	margin-right: 5px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	color: #888;
+}
+</style>
 </head>
-<body>
-<div id="chart"></div>
-<div id="preview"></div>
-<h1>OAuth2 Test Page</h1>
+<body ng-app="TravelPlannerApp">
 
-<div id="inputparameters">
+	<nav class="navbar navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand logo" href="#">
+				<span class="fa fa-suitcase"></span>
+				<!-- 
+				<img class="img-responsive img-rounded" style="width:40px;" src="images/backpack.svg" title="Travel Plan"/>
+				 -->
+				</a>
+			</div>
+			<!-- /.nav-collapse -->
+			<div id="navbar" class="collapse navbar-collapse" ng-controller="MenuController">
+				<h4 class="navbar-text hidden-xs" ><span style="color:white">Your trips</span><i style="color:#7CDB38;" class="fa fa-arrow-right"></i></h4>
+				<ul class="nav navbar-nav">
+					<li ng-repeat="item in menu" ng-class="getClass(item)" >
+						<a ng-click="toggle(item)" href="#/trip/{{item.id}}"><span style="color:#7CDB38;" class="fa fa-suitcase"></span> <span>{{item.name}}</span></a>
+					</li>
+				</ul>
+			</div>
+			
 
-    <form id="inputparams">
-        <label for="username">Username</label>
-        <input id="username" name="username" type="email" value="blah@blah.com" required/>
+		</div>
+		<!-- /.container -->
+	</nav>
+	<!-- /.navbar -->
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-right">
 
-        <label for="start_ts">Start Time</label>
-        <input id="start_ts" name="start_ts" type="text" required/>
+			<div class="col-xs-12 col-sm-9">
+			<button class="btn btn-success btn-lg"><span class="fa fa-leanpub"></span> New plan</button>
+				<!-- Breadcrumb -->
+				<!-- 
+		    	<ul class="breadcrumb hidden-xs" ng-controller="BreadcrumbController">
+        			<li ng-repeat="path in currentPath" ><a href="#{{path.href}}">{{path.name}}</a></li>
+        			<li ng-repeat="path in currentEditPath" class="active" ng-click="path.edit=true" >
+        				<span ng-show="!path.edit">{{path.name}}</span>
+        				<input type="text" placeholder="{{path.name}}" ng-show="path.edit" ng-blur="path.edit=false" ng-model="path.name" focus-on-show/>
+        			</li>
+    			</ul>
+				 -->
+    			<!-- /Breadcrumb -->
+				<p class="pull-right visible-xs">
+					<button type="button" class="btn btn-default btn-sm" data-toggle="offcanvas">&gt;&gt;</button>
+				</p>
+				<div class="row">&nbsp;</div>
+				<!-- Content -->
+				<div class="row" ng-view>
+				</div>
+				<!--/Content-->
+			</div>
+			<!--/.col-xs-12.col-sm-9-->
+			<!-- .sidebar-offcanvas -->
+			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" >
+				<div class="list-group">
+					<!-- profile -->
+					<div class="list-group-item list-group-header user-container visible-md visible-lg" ng-controller="ProfileController">
+						<img class="user picture img-circle" ng-src="{{user.picture}}" /> 
+						<div class="user profile"> 
+							<span class="user name">{{user.name}}</span>
+							<span class="user email">{{user.email}}</span>
+						</div>
+					</div>
+					<!-- /profile -->
+					<div class="list-group-item list-group-header">
+						<div class="form-inline">
+							<div class="form-group">
+								<div class="input-group">
+								<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+								<input type="search" class="form-control" placeholder="Search..."/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-controller="SubmenuController">
+						<a ng-repeat="subitem in submenu" class="list-group-item" ng-class="getSubClass(subitem)" href="#{{subitem.href}}" >{{subitem.name}}</a>
+					</div>
+				</div>
+			</div>
+			<!--/.sidebar-offcanvas-->
+		</div>
+		<!--/row-->
 
-        <label for="end_ts">End Time</label>
-        <input id="end_ts" name="end_ts" type="text" required/>
-    </form>
-</div>
+		<hr>
+		<footer>
+			<p>&copy; Travel Planner 2015</p>
+		</footer>
+
+	</div>
+	<!--/.container-->
+	<!-- Jquery -->
+	<script src="libs/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- Angular -->
+	<script src="libs/angular/angular.min.js"></script>
+	<!--  Angular modules -->
+	<script src="libs/angular-route/angular-route.js"></script>
+	<script src="libs/angular-resource/angular-resource.min.js"></script>
+	<script src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<!-- Third party plugins -->
+	<script src="js/angular/angular-utils-pagination/dirPagination.js"></script>
+	<script src="js/angular/ng-mobile-menu/ng-mobile-menu.min.js"></script>
+	<!-- App main -->
+	<script src="js/dist/TravelPlannerApp.js"></script>
+	<!-- 
+	<script src="js/TravelPlannerApp/app.js"></script>
+	<script src="js/TravelPlannerApp/config.js"></script>
+	<script src="js/TravelPlannerApp/filters.js"></script>
+	<script src="js/TravelPlannerApp/directives.js"></script>
+	 -->
+	<!-- Profile -->
+<!-- 	<script src="js/TravelPlannerApp/profile/profile.module.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/profile/profile.service.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/profile/profile.controller.js"></script> -->
+	<!-- Menu -->
+<!-- 	<script src="js/TravelPlannerApp/breadcrumb/breadcrumb.module.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/breadcrumb/breadcrumb.service.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/breadcrumb/breadcrumb.controller.js"></script> -->
+	
+	<!-- Shared module -->
+<!-- 	<script src="js/TravelPlannerApp/shared/shared.module.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/shared.service.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/categories.service.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/discussions.service.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/trips.service.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/menu.controller.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/submenu.controller.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/categories.controller.js"></script> -->
+<!-- 	<script src="js/TravelPlannerApp/shared/editor.controller.js"></script> -->
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('[data-toggle="offcanvas"]').click(function() {
+				$('.row-offcanvas').toggleClass('active')
+			});
+		});
+		$(function(){
+		   // $('#sidebar').affix('checkPosition');
+		})
+	</script>
 </body>
 </html>
-

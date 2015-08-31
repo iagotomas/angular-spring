@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 
+import com.itomas.oauth2.google.security.GoogleAccessTokenConverter;
+
 import java.util.Map;
 
 public class GoogleAccessTokenConverterTest {

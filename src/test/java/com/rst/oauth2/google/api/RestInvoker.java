@@ -49,7 +49,7 @@ class RestInvoker {
 
     private HttpHeaders createHeaders(String username, String password) {
         String auth = username + ":" + password;
-        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
+        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("UTF-8")));
         String authHeader = "Basic " + new String(encodedAuth);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
