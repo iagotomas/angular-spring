@@ -20,6 +20,7 @@ import com.itomas.oauth2.google.security.DefaultUserAuthenticationConverter;
 import com.itomas.oauth2.google.security.GoogleAccessTokenConverter;
 import com.itomas.oauth2.google.security.GoogleTokenServices;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,13 +62,13 @@ public class GoogleTokenServicesTest {
     }
 
     @Test
-    public void shouldLoadAuthenticationAndTransformValuesToStandardValues() throws Exception {
+    public <T> void shouldLoadAuthenticationAndTransformValuesToStandardValues() throws Exception {
         Map<String, String> body = new HashMap<>();
         body.put("issued_to", "blh");
         body.put("user_id", "user@domain.google.com");
         body.put("email", "user@domain.google.com");
         given(response.getBody()).willReturn(body);
-        given(restTemplate.exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class))).willReturn(response);
+        given(restTemplate.exchange((URI)anyObject(), any(HttpMethod.class), any(HttpEntity.class), (Class<T>)any(Class.class))).willReturn((ResponseEntity<T>) response);
         given(accessTokenConverter.extractAuthentication(body)).willReturn(mockAuthentication);
         googleTokenServices.setRestTemplate(restTemplate);
         googleTokenServices.setCheckTokenEndpointUrl("//");
@@ -89,13 +90,13 @@ public class GoogleTokenServicesTest {
     }
 
     @Test
-    public void shouldLoadAuthenticationAndTransformValuesToStandardValuesAndAddDomainRole() throws Exception {
+    public <T> void shouldLoadAuthenticationAndTransformValuesToStandardValuesAndAddDomainRole() throws Exception {
         Map<String, String> body = new HashMap<>();
         body.put("issued_to", "blh");
         body.put("user_id", "user@domain.google.com");
         body.put("email", "user@domain.google.com");
         given(response.getBody()).willReturn(body);
-        given(restTemplate.exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class))).willReturn(response);
+        given(restTemplate.exchange((URI)anyObject(), any(HttpMethod.class), any(HttpEntity.class), (Class<T>)any(Class.class))).willReturn((ResponseEntity<T>) response);
         googleTokenServices.setRestTemplate(restTemplate);
         googleTokenServices.setCheckTokenEndpointUrl("//");
         DefaultUserAuthenticationConverter defaultUserAuthenticationConverter = new DefaultUserAuthenticationConverter();

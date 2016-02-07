@@ -17,7 +17,7 @@ public class SpringBootRestApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
 //        LOGGER.info("Booting with " + SpringBootRestApplication.class.getSimpleName());
         SpringApplication application = new SpringApplication(SpringBootRestApplication.class);
-        application.setShowBanner(false);
+        application.setShowBanner(true);
         application.run(args);
 //        LOGGER.info("Successfully started application: " + SpringBootRestApplication.class.getSimpleName());
     }
