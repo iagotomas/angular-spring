@@ -1,0 +1,70 @@
+<div class="col-xs-12 col-sm-6 col-lg-6"
+	ng-repeat="discussion in discussions|isNotLeaf">
+	
+	<div class="card" ng-class="(discussion.child.length>0)?'piles':''" >
+    <carousel interval="2000" ng-show="discussion.child.length>0">
+      <slide active="true" >
+        <img ng-src="{{discussion.image}}" style="margin:auto;width:100%;height:260px;opacity: 0.2;">
+        <div class="carousel-caption text-left" style="top:0px;text-align:left;">
+			<h2>{{discussion.name}} {{discussion.child.length}}</h2>
+			<p>
+				<span>{{tripId}} - {{categoryId}}</span> 
+				<span ng-repeat="tag in discussion.tags">{{tag}}</span>
+			</p>
+			<p class="discussion comment">{{discussion.content|characters:25:true}}</p>
+			<span>Comments : {{discussion.child.length}}</span>
+			<p ng-repeat="comment in discussion.child|child:discussions">
+				{{comment.name}}
+			</p>
+        </div>
+      </slide>
+      <slide ng-repeat="child in discussion.child">
+        <img ng-src="{{discussion.image}}" style="margin:auto;width:100%;height:260px;opacity: 0.2;">
+        <div class="carousel-caption text-left" style="top:0px;text-align:left;">
+			<h2>{{discussion.name}} {{child}} {{discussion.child.length}}</h2>
+			<p>
+				<span>{{tripId}} - {{categoryId}}</span> 
+				<span ng-repeat="tag in discussion.tags">{{tag}}</span>
+			</p>
+			<p class="discussion comment">{{discussion.content|characters:25:true}}</p>
+			<span>Comments : {{discussion.child.length}}</span>
+			<p ng-repeat="comment in discussion.child|child:discussions">
+				{{comment.name}}
+			</p>
+        </div>
+      </slide>
+    </carousel>
+        <div class="carousel-caption text-left" style="top:0px;text-align:left;" ng-show="discussion.child.length==0">
+			<h2>{{discussion.name}}</h2>
+			<p>
+				<span>{{tripId}} - {{categoryId}}</span> 
+				<span ng-repeat="tag in discussion.tags">{{tag}}</span>
+			</p>
+			<p class="discussion comment">{{discussion.content|characters:25:true}}</p>
+			<span>Comments : {{discussion.child.length}}</span>
+			<p ng-repeat="comment in discussion.child|child:discussions">
+				{{comment.name}}
+			</p>
+        </div>
+	</div>
+	<div class="btn-group category-btn">
+		<button type="button" class="btn btn-link btn-lg">
+			<span class="fa fa-eye-slash" aria-hidden="true"></span>
+		</button>
+		<button type="button" class="btn btn-link btn-lg">
+			<span class="fa fa-share" aria-hidden="true"></span>
+		</button>
+		<button type="button" class="btn btn-link btn-lg" ng-click="show(discussion)">
+			<span class="fa fa-retweet" aria-hidden="true"></span>
+		</button>
+	</div>
+	<div class="btn-group pull-down align-right category-btn">
+		<button type="button" class="btn btn-danger btn-lg">
+			<span class="fa fa-thumbs-o-down" aria-hidden="true"></span>
+		</button>
+		<button type="button" class="btn btn-success btn-lg">
+			<span class="fa fa-thumbs-o-up" aria-hidden="true"></span>
+		</button>
+	</div>
+</div>
+<!--/.col-xs-6.col-lg-4-->

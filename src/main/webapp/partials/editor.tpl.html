@@ -1,0 +1,35 @@
+<!-- Editor -->
+<div class="col-xs-12">
+	<div class="pull-left col-sm-2">
+		<a type="button" class="btn btn-link" ng-click="isCollapsed=!isCollapsed">
+			<span class="fa fa-eye-slash btn-xs" ng-show="!isCollapsed">Hide editor</span><span class="fa fa-pencil btn-lg" ng-show="isCollapsed">Write your trip plan</span>
+		</a>
+	</div>
+	<div class="jumbotron" collapse="isCollapsed">
+		<div class="editor tags container">
+			<span class="editor tags tag" ng-repeat="tag in tags">{{tag}}</span>
+		</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="tripplan" class="col-sm-12 control-label">Write
+					down your trip plans</label>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<textarea id="tripplan" class="form-control"
+						placeholder="Plan your trip ..." ng-keypress="parseTags()"
+						ng-model="editor" ng-model-options="{debounce: { 'default': 500}}"
+						ng-model="editorData"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-8 col-sm-4">
+					<button class="editor control btn btn-primary" ng-click="save()">Save</button>
+					<button class="editor control btn btn-danger" ng-click="cancel()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- /collapse -->
+</div>
+<!-- /Editor -->
