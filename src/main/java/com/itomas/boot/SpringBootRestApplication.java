@@ -1,15 +1,12 @@
 package com.itomas.boot;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 
-@EnableAutoConfiguration
-@ComponentScan
-@Configuration
-public class SpringBootRestApplication extends SpringBootServletInitializer {
+@EnableOAuth2Sso
+@SpringBootApplication
+public class SpringBootRestApplication {
 
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(

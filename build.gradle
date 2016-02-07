@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         mavenCentral()
-		jcenter()
     }
 
     dependencies {
@@ -28,6 +27,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-autoconfigure") {
         exclude module: 'spring-boot-starter-logging'
     }
+	compile("org.springframework.boot:spring-boot-starter") {
+        exclude module: 'spring-boot-starter-logging'
+    }
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: 'spring-boot-starter-logging'
     }
@@ -37,21 +39,37 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator") {
         exclude module: 'spring-boot-starter-logging'
     }
-
-    // Database - Cassandra via Spring Data
-    compile('org.springframework.data:spring-data-cassandra:1.0.4.RELEASE') {
-        exclude module: 'junit'
-        exclude module: 'log4j'
+    compile("org.springframework.boot:spring-boot-starter-data-rest") {
+    	exclude module: 'spring-boot-starter-logging'
+    }
+	compile("org.springframework.boot:spring-boot-starter-data-jpa") {
+        exclude module: 'spring-boot-starter-logging'
+    }
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb") {
+        exclude module: 'spring-boot-starter-logging'
     }
 
+	// String utils
+	compile("org.apache.commons:commons-lang3:3.3.2")
+	
+	// In memory DB
+	compile("com.h2database:h2")
+	
     // web
     compile 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1'
     compile 'org.apache.taglibs:taglibs-standard-jstlel:1.2.1'
-
+	
     // security
-    compile 'org.springframework.security:spring-security-web'
-    compile 'org.springframework.security:spring-security-config'
-    compile 'org.springframework.security.oauth:spring-security-oauth2'
+	compile("org.springframework.boot:spring-boot-starter-security") {
+		exclude module: 'spring-boot-starter-logging'
+	}
+	compile ("org.springframework.security.oauth:spring-security-oauth2:2.0.8.RELEASE") {
+		exclude module: 'org.codehaus.jackson'
+		exclude module: 'jackson-mapper-asl'
+	}
+//    compile 'org.springframework.security:spring-security-web'
+//    compile 'org.springframework.security:spring-security-config'
+//    compile 'org.springframework.security.oauth:spring-security-oauth2'
 
 	// Swagger
 	compile "io.springfox:springfox-swagger2:2.3.1"

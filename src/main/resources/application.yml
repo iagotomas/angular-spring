@@ -1,0 +1,21 @@
+server:
+  port: 9000
+security:
+  oauth2:
+    sso:
+      loginPath: /googleLogin
+    resource:
+      tokenInfoUri: https://www.googleapis.com/oauth2/v2/tokeninfo
+      userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo	
+    client:
+      id: google-oauth-client
+      clientId: 117644993492-fo0li024f6676bje3qertjqjbopbbp2f.apps.googleusercontent.com
+      clientSecret: EjS3NtAC0JvtxBw2l3M_AuDG
+      accessTokenUri: https://accounts.google.com/o/oauth2/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+      tokenName: authorization_code
+      scope: https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/plus.login,https://www.googleapis.com/auth/plus.profile.emails.read
+      useCurrentUri: false
+      preEstablishedRedirectUri: http://localhost:9000/googleLogin
+      authenticationScheme: query
+      clientAuthenticationScheme: form
