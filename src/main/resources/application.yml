@@ -1,16 +1,23 @@
+# General settings
 server:
   port: 9000
+spring:
+  data:
+    mongodb:
+      host: 192.168.99.100
+      port: 32768
+      database: travelplan  
+  
+# Security  
 security:
   oauth2:
     sso:
-      loginPath: /googleLogin
+      loginPath: /index.html
     resource:
       tokenInfoUri: https://www.googleapis.com/oauth2/v2/tokeninfo
       userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo	
     client:
       id: google-oauth-client
-      clientId: 117644993492-fo0li024f6676bje3qertjqjbopbbp2f.apps.googleusercontent.com
-      clientSecret: EjS3NtAC0JvtxBw2l3M_AuDG
       accessTokenUri: https://accounts.google.com/o/oauth2/token
       userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
       tokenName: authorization_code
