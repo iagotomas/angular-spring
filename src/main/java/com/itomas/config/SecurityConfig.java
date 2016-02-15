@@ -11,20 +11,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/**")
-				.authorizeRequests().antMatchers( "/login","/public/**", "/resources/**","/resources/public/**").permitAll()
-				.antMatchers("/googleLogin").anonymous().anyRequest().authenticated()
-				.and()
-				.formLogin()
-					.loginPage("/login")
-					.loginProcessingUrl("/login")
-					.defaultSuccessUrl("/")
-					.and()
-					.csrf().disable()
-					.logout()
-						.logoutSuccessUrl("/")
-						.logoutUrl("/logout");
+		http
+	      .antMatcher("/**")
+	      .authorizeRequests()
+	        .antMatchers("/","/js/**","/css/**","/node_modules/**","/partials/**","/favicon.ico**","/index.html**", "/login**", "/webjars/**")
+	        .permitAll()
+	      .anyRequest()
+	        .authenticated();
 	}
-	
+
 
 }

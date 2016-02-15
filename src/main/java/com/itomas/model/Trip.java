@@ -1,52 +1,69 @@
 package com.itomas.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="trips")
 public class Trip {
 
-	private @Id @GeneratedValue(strategy = GenerationType.AUTO) long id;
+	private @Id Long id;
 	private String name;
 	private String description;
-	private int count;
+	private Integer count;
 	private String[] tag;
-
-
-
-	public String[] getTag() {
-		return tag;
-	}
-
-	public void setTag(String[] tag) {
-		this.tag = tag;
-	}
-
-	public void setName(String name) {
+	private Message[] messages;
+	private Traveller author;
+	public Trip(Long id, String name, String description, Integer count,
+			String[] tag, Message[] messages, Traveller author) {
+		super();
+		this.id = id;
 		this.name = name;
-	}
-
-	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public void setCount(int count) {
 		this.count = count;
+		this.tag = tag;
+		this.messages = messages;
+		this.author = author;
 	}
-
-
 	public String getName() {
 		return name;
 	}
-
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getDescription() {
 		return description;
 	}
-
-	public int getCount() {
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Integer getCount() {
 		return count;
 	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+	public String[] getTag() {
+		return tag;
+	}
+	public void setTag(String[] tag) {
+		this.tag = tag;
+	}
+	public Message[] getMessages() {
+		return messages;
+	}
+	public void setMessages(Message[] messages) {
+		this.messages = messages;
+	}
+	public Traveller getAuthor() {
+		return author;
+	}
+	public void setAuthor(Traveller author) {
+		this.author = author;
+	}
+	public Long getId() {
+		return id;
+	}
+	
 
 }

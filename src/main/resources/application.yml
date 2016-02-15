@@ -8,21 +8,23 @@ spring:
       port: 32768
       database: travelplan  
   
-# Security  
+# Security
+# https://spring.io/guides/tutorials/spring-boot-oauth2/  
 security:
   oauth2:
-    sso:
-      loginPath: /index.html
     resource:
-      tokenInfoUri: https://www.googleapis.com/oauth2/v2/tokeninfo
-      userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo	
+      userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo
+      preferTokenInfo: false
     client:
       id: google-oauth-client
-      accessTokenUri: https://accounts.google.com/o/oauth2/token
+      accessTokenUri: https://www.googleapis.com/oauth2/v3/token
       userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
       tokenName: authorization_code
-      scope: https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/plus.login,https://www.googleapis.com/auth/plus.profile.emails.read
+      #scope: https://www.googleapis.com/auth/userinfo.email,https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/plus.login,https://www.googleapis.com/auth/plus.profile.emails.read
+      scope:
+        - profile
+        - email
       useCurrentUri: false
-      preEstablishedRedirectUri: http://localhost:9000/googleLogin
+      preEstablishedRedirectUri: http://localhost:9000/login
       authenticationScheme: query
       clientAuthenticationScheme: form
